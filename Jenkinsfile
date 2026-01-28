@@ -58,7 +58,7 @@ node('docker') {
                         k3d.kubectl("get ns monitoring -o yaml")
                         k3d.kubectl("get netpol external-monitoring-to-prometheus -o yaml")
                         k3d.kubectl("get secret k8s-prometheus-auth-presets -o yaml")
-                        k3d.kubectl("get secret ecosystem-external-monitoring -n monitoring -o yaml")
+                        k3d.kubectl("get secret default-external-monitoring -n monitoring -o yaml")
                     }
                 } catch(Exception e) {
                     k3d.collectAndArchiveLogs()
