@@ -1,0 +1,20 @@
+{{ $prometheusSelector := .Values.global.networkPolicies.prometheusSelector }}
+{{ $monitoringSelector := .Values.global.networkPolicies.monitoringSelector }}
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: external-monitoring-to-prometheus
+spec:
+  podSelector: {{ $prometheusSelector | toYaml | nindent 4 }}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+      {{- range .Values.namespaces.names }}
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: {{ . }}
+        podSelector: {{ $monitoringSelector | toYaml | nindent 10 }}
+      {{- end }}
+      ports: {{ .Values.global.networkPolicies.prometheus.ports | toYaml | nindent 8 }}

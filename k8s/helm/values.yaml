@@ -1,0 +1,29 @@
+global:
+  networkPolicies:
+    # If NetworkPolicies should be used at all.
+    # Normally the Cloudogu EcoSystem uses NetworkPolicies, so this is necessary.
+    # If for some reason, you do not want or need NetworkPolicies, they can be disabled here.
+    enabled: true
+    prometheus:
+      # Ports to be made accessible for external monitoring.
+      ports:
+        - port: auth-proxy
+          protocol: TCP
+      # The selector that should be used for NetworkPolicies to select the Prometheus' pod.
+      # Normally, this does not have to be adjusted.
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: prometheus
+          k8s.cloudogu.com/component.name: k8s-prometheus
+    # The selector that should be used for NetworkPolicies to select external monitoring pods.
+    #
+    # monitoringSelector:
+    #   matchLabels:
+    #     my-label: my-value
+    monitoringSelector: null
+
+namespaces:
+  # Whether to create the namespaces specified in namespaces.names.
+  create: true
+  # List of the namespaces to create resources (NetworkPolicies, ...) for.
+  names: [ monitoring ]
