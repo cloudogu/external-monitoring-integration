@@ -1,10 +1,9 @@
-# External Monitoring
-
-## Quickstart
+# Quickstart
 
 The following depicts an example setup utilizing the official Grafana Helm chart.
+For more in-depth configuration, see [detailed configuration](detailed-configuration_en.md).
 
-**Disclaimer**: This example does **not** reflect best practices and should **not** be used
+**Warning**: This example does **not** reflect best practices and should **not** be used
 in a production environment without further research.
 
 1. Make sure to have the `k8s-prometheus` component installed in your EcoSystem.
