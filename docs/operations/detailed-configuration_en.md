@@ -1,6 +1,6 @@
-# Technical Details
+# Detailed Configuration
 
-For a quick-and-dirty deployment, see [quickstart](quickstart_en.md).
+For a quick-and-dirty example, see [quickstart](quickstart_en.md).
 
 ## Namespaces
 
