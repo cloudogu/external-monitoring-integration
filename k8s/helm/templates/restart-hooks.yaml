@@ -1,0 +1,75 @@
+{{ $values := .Values }}
+{{ $releaseNamespace := .Release.Namespace }}
+
+# For ArgoCD, we need two jobs
+# since we can't annotate multiple hook types on one job
+{{ $hooks := list
+              (dict
+                "name" "post-sync"
+                "annotations" (dict
+                  "argocd.argoproj.io/hook" "PostSync"
+                  "helm.sh/hook" "post-install"
+                  "helm.sh/hook-delete-policy" "hook-succeeded"))
+              (dict
+                "name" "post-delete"
+                "annotations" (dict
+                  "argocd.argoproj.io/hook" "PostDelete"
+                  "helm.sh/hook" "post-delete"
+                  "helm.sh/hook-delete-policy" "hook-succeeded")) }}
+
+{{ range $hooks }}
+
+{{ $name := get . "name" }}
+{{ $annotations := get . "annotations" | toYaml | nindent 4 }}
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: external-monitoring-restart-prometheus-{{ $name }}
+  annotations: {{ $annotations }}
+spec:
+  template:
+    metadata:
+      name: external-monitoring-restart-prometheus-{{ $name }}
+    spec:
+      restartPolicy: Never
+      serviceAccountName: external-monitoring-restart-prometheus-{{ $name }}
+      containers:
+        - name: restart-prometheus
+          image: {{ $values.images.kubectl }}
+          command: [ kubectl, rollout, restart,
+                     "{{ $values.prometheus.kind }}",
+                     --selector={{ $values.prometheus.selector }},
+                     -n, {{ $releaseNamespace }} ]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: external-monitoring-restart-prometheus-{{ $name }}
+  annotations: {{ $annotations }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: external-monitoring-restart-prometheus-{{ $name }}
+  annotations: {{ $annotations }}
+rules:
+  - apiGroups: [ apps ]
+    verbs: [ list, patch ]
+    resources: [ {{ $values.prometheus.kind }}s ]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: external-monitoring-restart-prometheus-{{ $name }}
+  annotations: {{ $annotations }}
+subjects:
+  - kind: ServiceAccount
+    name: external-monitoring-restart-prometheus-{{ $name }}
+    namespace: {{ $releaseNamespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: external-monitoring-restart-prometheus-{{ $name }}
+---
+{{ end }}
