@@ -27,3 +27,10 @@ namespaces:
   create: true
   # List of the namespaces to create resources (NetworkPolicies, ...) for.
   names: [ monitoring ]
+
+prometheus:
+  kind: statefulset
+  selector: k8s.cloudogu.com/component.name=k8s-prometheus
+
+images:
+  kubectl: alpine/kubectl:1.35.0

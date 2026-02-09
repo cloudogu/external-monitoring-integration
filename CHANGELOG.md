@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.0] - 2026-02-09
+
 ### Added
 
 - Namespaces for external monitoring
 - NetworkPolicies for external monitoring
 - Secrets to access Prometheus for external monitoring
+- [#1] Automate Prometheus restart after creating secrets
