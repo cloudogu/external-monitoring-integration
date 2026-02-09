@@ -1,4 +1,4 @@
-{{ $prometheusSelector := .Values.global.networkPolicies.prometheusSelector }}
+{{ $prometheusSelector := .Values.global.networkPolicies.prometheus.selector }}
 {{ $monitoringSelector := .Values.global.networkPolicies.monitoringSelector }}
 
 apiVersion: networking.k8s.io/v1
@@ -12,9 +12,9 @@ spec:
   ingress:
     - from:
       {{- range .Values.namespaces.names }}
-      - namespaceSelector:
-          matchLabels:
-            kubernetes.io/metadata.name: {{ . }}
-        podSelector: {{ $monitoringSelector | toYaml | nindent 10 }}
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ . }}
+          podSelector: {{ $monitoringSelector | toYaml | nindent 12 }}
       {{- end }}
       ports: {{ .Values.global.networkPolicies.prometheus.ports | toYaml | nindent 8 }}
