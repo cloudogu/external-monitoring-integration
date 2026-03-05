@@ -33,4 +33,4 @@ prometheus:
   selector: k8s.cloudogu.com/component.name=k8s-prometheus
 
 images:
-  kubectl: alpine/kubectl:1.35.0 # TODO wait for 1.35.2 https://hub.docker.com/r/alpine/kubectl/tags
+  kubectl: alpine/kubectl:1.35.2
