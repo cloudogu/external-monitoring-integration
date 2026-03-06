@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+- [#3] Update kubectl to fix CVE-2025-68121
+
 ## [v1.0.0] - 2026-02-09
 
 ### Added
