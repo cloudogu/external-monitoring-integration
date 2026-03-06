@@ -1,7 +1,7 @@
 apiVersion: v1
 values:
   images:
-    kubectl: alpine/kubectl:1.35.0
+    kubectl: alpine/kubectl:1.35.2
 patches:
   values.yaml:
     images:
