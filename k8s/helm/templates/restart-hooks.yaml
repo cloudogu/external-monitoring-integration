@@ -16,6 +16,10 @@ spec:
     spec:
       restartPolicy: Never
       serviceAccountName: {{ $hookName }}
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .  | nindent 8 }}
+      {{- end }}
       containers:
         - name: restart-prometheus
           image: {{ .Values.images.kubectl }}
