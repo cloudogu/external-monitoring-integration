@@ -1,4 +1,6 @@
 global:
+  imagePullSecrets:
+    - name: ces-container-registries
   networkPolicies:
     # If NetworkPolicies should be used at all.
     # Normally the Cloudogu EcoSystem uses NetworkPolicies, so this is necessary.
