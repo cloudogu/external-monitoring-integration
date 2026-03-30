@@ -1,5 +1,5 @@
 ARTIFACT_ID=external-monitoring-integration
-VERSION=1.0.1
+VERSION=1.0.2
 
 MAKEFILES_VERSION=10.5.0
 REGISTRY_NAMESPACE?=k8s
