@@ -1,5 +1,5 @@
 #!groovy
-@Library('github.com/cloudogu/ces-build-lib@5.1.0')
+@Library('github.com/cloudogu/ces-build-lib@6.0.0')
 import com.cloudogu.ces.cesbuildlib.*
 
 git = new Git(this, "cesmarvin")
@@ -12,7 +12,7 @@ changelog = new Changelog(this)
 repositoryName = "external-monitoring-integration"
 productionReleaseBranch = "main"
 
-goVersion = "1.25"
+goVersion = "1.27.1"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
 registryNamespace = "k8s"
