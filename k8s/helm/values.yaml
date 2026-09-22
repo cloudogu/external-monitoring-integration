@@ -35,4 +35,4 @@ prometheus:
   selector: k8s.cloudogu.com/component.name=k8s-prometheus
 
 images:
-  kubectl: alpine/kubectl:1.35.2
+  kubectl: alpine/kubectl:1.37.0
